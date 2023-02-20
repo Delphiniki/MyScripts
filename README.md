@@ -1,3 +1,3 @@
 # Test scripts
-Test repo
+Test repo.
 This is my first repo.
