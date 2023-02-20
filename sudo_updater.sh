@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#This script updates the sudo package release
+#This script updates the sudo package version to latest
 
 sudo apt-get update -y && \
 tempd=$(mktemp -d)
