@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#This script updates the sudo package release
+
 sudo apt-get update -y && \
 tempd=$(mktemp -d)
 cd $tempd
