@@ -8,7 +8,7 @@ cd $tempd
 wget https://www.sudo.ws/dist/sudo.tar.gz
 tar -zxvf ./sudo.tar.gz
 #echo "Done with extraction of files!"
-sudodir=$(find ./ -type d -name 'sudo-*')
+sudodir=$(sudo find ./ -type d -name 'sudo-*')
 #echo $lastdir1
 cd $sudodir
 #echo $(pwd)

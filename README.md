@@ -1,3 +1,3 @@
-# sudo updater 2023
-Test repo
+# Test scripts
+Test repo.
 This is my first repo.
