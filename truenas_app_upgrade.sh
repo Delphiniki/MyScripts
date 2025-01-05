@@ -5,6 +5,7 @@
 hostname=$(hostname)
 apps=()
 
+
 applist=$(midclt call app.query | jq -r '.[].name')  # create a list of all apps
 for a in  "${applist[@]}"; do
   apps+=($a)
