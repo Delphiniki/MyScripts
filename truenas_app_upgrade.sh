@@ -4,7 +4,9 @@
 
 hostname=$(hostname)
 apps=()
-
+flag=false
+file="./attach"
+echo "" > $file
 
 applist=$(midclt call app.query | jq -r '.[].name')  # create a list of all apps
 for a in  "${applist[@]}"; do
@@ -19,18 +21,27 @@ for app in "${apps[@]}"; do
    if [ "$upgrade" == "true" ]; then
       echo "$app has Latest version."    # optional
 
-else
+   else
       echo "$app Upgrade available."    # optional
+      flag=true
       midclt call app.upgrade  $app    # upgrading the app
-      sleep 2  # wait some time to upgrade
+      sleep 3  # wait some time to upgrade
       version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
       logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
+      echo $app - version $version >> $file
 
-      ### Optional : slack notification:
-     # curl -X POST -H 'Content-type: application/json' \
-         # --data '{"text":"Hostname: '$hostname', Application: '$app' was upgraded to latest version: '$version' !"}' \
-         # https://hooks.slack.com/services/XXXXXXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZZZ
    fi
 done
 
+if $flag ; then
+  curl -s \
+  --form-string channels=notify \
+  -F file=@$file \
+  -F initial_comment="From hostname: $hostname.Upgraded apps list : " \
+  -F filename="app_upgraded" \
+  -F token=xoxb-6879485116368-6852333487398-UXRWjGNf2hwG6FYDL2tDYzqc \
+  https://slack.com/api/files.upload
+  flag=false
+fi
+rm $file
 exit 0
