@@ -4,7 +4,7 @@
 
 hostname=$(hostname)
 apps=()
-flag=false
+flag=false  ## flag for slack notification
 file="./attach"
 echo "" > $file
 
@@ -33,13 +33,14 @@ for app in "${apps[@]}"; do
    fi
 done
 
+### Slack notification with a list of upgraded apps
 if $flag ; then
   curl -s \
-  --form-string channels=<some channel> \
+  --form-string channels=<some channel> \   # <-- change channel here
   -F file=@$file \
   -F initial_comment="From hostname: $hostname.Upgraded apps list : " \
   -F filename="app_upgraded" \
-  -F token=<xoxb-1111111111-2222222222222-abcdef123456789> \
+  -F token=<xoxb-1111111111-2222222222222-abcdef123456789> \   # <-- change bot token here
   https://slack.com/api/files.upload
   flag=false
 fi
