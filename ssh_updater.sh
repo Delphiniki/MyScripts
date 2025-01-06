@@ -1,15 +1,16 @@
 #!/bin/bash
 
-# This script upgrades openssh package to version 9.2p1
+# This script upgrades openssh package to version 9.9p1
+### Created by Nikolay Chotrov ###
 
 sudo apt update && \
 sudo apt install build-essential zlib1g-dev libssl-dev -y && \
 sudo mkdir /var/lib/sshd
 sudo chmod -R 700 /var/lib/sshd/
 sudo chown -R root:sys /var/lib/sshd/
-# change the openssh version in next lines #
+
 cd /tmp
-wget -c https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.2p1.tar.gz
+wget -c https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p1.tar.gz
 sshfile=$(sudo find ./ -type f -name "openssh-*.tar.gz")
 tar -xzf $sshfile
 sshdir=$(sudo find ./ -type d -name "openssh-*")
