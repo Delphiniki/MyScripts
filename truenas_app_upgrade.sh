@@ -35,11 +35,11 @@ done
 
 if $flag ; then
   curl -s \
-  --form-string channels=notify \
+  --form-string channels=<some channel> \
   -F file=@$file \
   -F initial_comment="From hostname: $hostname.Upgraded apps list : " \
   -F filename="app_upgraded" \
-  -F token=xoxb-6879485116368-6852333487398-UXRWjGNf2hwG6FYDL2tDYzqc \
+  -F token=<xoxb-1111111111-2222222222222-abcdef123456789> \
   https://slack.com/api/files.upload
   flag=false
 fi
