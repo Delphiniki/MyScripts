@@ -1,6 +1,8 @@
 #!/bin/bash
 
 ### This script uses Truenas API client to get list of all apps and upgrade them ,if there is  an upgrade available.
+### Mostly i use it as a cron job .Run as root .
+### Created by Nikolay Chotrov (2025) ####
 
 hostname=$(hostname)
 apps=()
