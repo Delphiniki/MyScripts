@@ -43,7 +43,7 @@ if $flag ; then
   -F initial_comment="From hostname: $hostname.Upgraded apps list : " \
   -F filename="app_upgraded" \
   -F token=<xoxb-1111111111-2222222222222-abcdef123456789> \   # <-- change bot token here
-  https://slack.com/api/files.upload
+  https://slack.com/api/files.upload >/dev/null 2>&1
   flag=false
 fi
 rm $file
