@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script uses Truenas API client to get list of all apps and upgrade them ,if there is  an upgrade available.
+### This script uses Truenas API client to get list of all apps and upgrade them ,if there is  an upgrade available.
 
 hostname=$(hostname)
 apps=()
