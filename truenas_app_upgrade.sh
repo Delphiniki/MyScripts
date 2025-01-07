@@ -30,7 +30,7 @@ for app in "${apps[@]}"; do
       sleep 3  # wait some time to upgrade
       version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
       logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
-      echo $app - version $version >> $file
+      echo $app - version $version >> $file   # creates a file containing a list of upgraded apps .Just for notification attachment
 
    fi
 done
