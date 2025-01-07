@@ -8,7 +8,7 @@ hostname=$(hostname)
 apps=()
 flag=false  ## flag for slack notification
 file="./attach"
-echo "" > $file
+echo "" > $file  # creates a file containing a list of upgraded apps .Just for notification attachment
 
 applist=$(midclt call app.query | jq -r '.[].name')  # create a list of all apps
 for a in  "${applist[@]}"; do
@@ -30,7 +30,7 @@ for app in "${apps[@]}"; do
       sleep 3  # wait some time to upgrade
       version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
       logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
-      echo $app - version $version >> $file   # creates a file containing a list of upgraded apps .Just for notification attachment
+      echo $app - version $version >> $file
 
    fi
 done
