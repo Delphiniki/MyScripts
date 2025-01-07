@@ -21,10 +21,10 @@ for app in "${apps[@]}"; do
    upgrade=$(midclt call app.config $app | jq | grep is_upgrade | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ')  # test if app needs upgrade
 
    if [ "$upgrade" == "true" ]; then
-      echo "$app has Latest version."    # optional
+      echo "$app has Latest version."    # optional for debug
 
    else
-      echo "$app Upgrade available."    # optional
+      echo "$app Upgrade available."    # optional for debug
       flag=true
       midclt call app.upgrade  $app    # upgrading the app
       sleep 3  # wait some time to upgrade
