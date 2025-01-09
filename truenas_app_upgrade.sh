@@ -18,10 +18,10 @@ done
 
 # Next upgrade apps if available:
 for app in "${apps[@]}"; do
+   actual=$(midclt call app.config $app | jq |  grep '"version":' | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ' | cut -d '"' -f2)
+   upgrade=$(midclt call app.latest | jq | grep -B6 '"name": "'${app}'"' | grep "latest_version" | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ' | cut -d '"' -f2)  # test if app needs upgrade
 
-   upgrade=$(midclt call app.config $app | jq | grep is_upgrade | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ')  # test if app needs upgrade
-
-   if [ "$upgrade" == "true" ]; then
+   if [ "$upgrade" == "$actual" ]; then
       echo "$app has Latest version."    # optional for debug
 
    else
