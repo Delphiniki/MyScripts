@@ -10,6 +10,7 @@ flag=false  ## flag for slack notification
 file="./attach"
 echo "" > $file  # creates a file containing a list of upgraded apps .Just for notification attachment
 
+midclt call catalog.sync   # sync app catalog
 applist=$(midclt call app.query | jq -r '.[].name')  # create a list of all apps
 for a in  "${applist[@]}"; do
   apps+=($a)
