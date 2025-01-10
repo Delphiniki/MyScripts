@@ -16,10 +16,10 @@ for a in  "${applist[@]}"; do
   apps+=($a)
 done
 
-# Next upgrade apps if available:
+### Next upgrade apps if available:
 for app in "${apps[@]}"; do
 
-    #  flag=true
+    #  flag=true   ##  use notification
       midclt call app.upgrade  $app    # upgrading the app
       sleep 3  # wait some time to upgrade
       version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
