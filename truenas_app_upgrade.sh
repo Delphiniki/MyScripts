@@ -5,7 +5,7 @@
 ### Created by Nikolay Chotrov (2025) ####
 
 hostname=$(hostname)
-apps=()
+#apps=()
 flag=false  ## flag for slack notification
 file="./attach"
 echo "" > $file  # creates a file containing a list of upgraded apps .Just for notification attachment
@@ -18,22 +18,13 @@ done
 
 # Next upgrade apps if available:
 for app in "${apps[@]}"; do
-   actual=$(midclt call app.config $app | jq |  grep '"version":' | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ' | cut -d '"' -f2)
-   upgrade=$(midclt call app.latest | jq | grep -B6 '"name": "'${app}'"' | grep "latest_version" | cut -d ":" -f2 | cut -d "," -f1 | tr -d ' ' | cut -d '"' -f2)  # test if app needs upgrade
 
-   if [ "$upgrade" == "$actual" ]; then
-      echo "$app has Latest version."    # optional for debug
-
-   else
-      echo "$app Upgrade available."    # optional for debug
-      flag=true
+    #  flag=true
       midclt call app.upgrade  $app    # upgrading the app
       sleep 3  # wait some time to upgrade
       version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
-      logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
+     # logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
       echo $app - version $version >> $file
-
-   fi
 done
 
 ### Slack notification with a list of upgraded apps
