@@ -24,7 +24,7 @@ echo "$applist" | while IFS= read -r app; do
     echo "Upgrading $app"
     midclt call app.upgrade "$app" > /dev/null    # upgrading the app
     sleep 3  # wait some time to upgrade
-    version=$(midclt call app.config "$app" | jq -r '.version')  # get the latest version
+    version=$(midclt call app.query |  jq -r '.[] | select(.name == "$app") | "\(.version)"')  # get the latest version
     echo "$app - version $version" >> $file  # log the upgraded app and its version
 done
 
