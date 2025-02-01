@@ -11,7 +11,7 @@ file="./attach"
 echo "" > $file  # creates a file containing a list of upgraded apps .Just for notification attachment
 
 midclt call catalog.sync > /dev/null   # sync app catalog
-applist=$(midclt call app.query | jq -r '.[] | select(.custom_app != true and .upgrade_available == true)) | "\(.name)"')  # create a list of upgradeable, non-custom, apps
+applist=$(midclt call app.query | jq -r '.[] | select(.custom_app != true and .upgrade_available == true) | "\(.name)"')  # create a list of upgradeable, non-custom, apps
 
 if [ -z "$applist" ]; then
     echo "No upgradeable apps found."
