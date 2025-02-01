@@ -10,21 +10,22 @@ flag=false  ## flag for slack notification
 file="./attach"
 echo "" > $file  # creates a file containing a list of upgraded apps .Just for notification attachment
 
-midclt call catalog.sync   # sync app catalog
-applist=$(midclt call app.query | jq -r '.[].name')  # create a list of all apps
-for a in  "${applist[@]}"; do
-  apps+=($a)
-done
+midclt call catalog.sync > /dev/null   # sync app catalog
+applist=$(midclt call app.query | jq -r '.[] | select(.custom_app != true and .upgrade_available == true)) | "\(.name)"')  # create a list of upgradeable, non-custom, apps
+
+if [ -z "$applist" ]; then
+    echo "No upgradeable apps found."
+    exit 0
+fi
 
 ### Next upgrade apps if available:
-for app in "${apps[@]}"; do
-
-    #  flag=true   ##  use notification
-      midclt call app.upgrade  $app    # upgrading the app
-      sleep 3  # wait some time to upgrade
-      version=$(midclt call app.config $app | jq | grep "version" | head -n4 | tail -n1 | cut -d ":" -f2 | tr -d '"' |  tr -d ' ')   # get last version
-     # logger "Upgraded $app to the latest version: $version"    # just logs the upgrade
-      echo $app - version $version >> $file
+echo "$applist" | while IFS= read -r app; do
+    # flag=true   ## use notification
+    echo "Upgrading $app"
+    midclt call app.upgrade "$app" > /dev/null    # upgrading the app
+    sleep 3  # wait some time to upgrade
+    version=$(midclt call app.query |  jq -r '.[] | select(.name == "$app") | "\(.version)"')  # get the latest version
+    echo "$app - version $version" >> $file  # log the upgraded app and its version
 done
 
 ### Slack notification with a list of upgraded apps
