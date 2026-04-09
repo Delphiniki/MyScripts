@@ -1,3 +1,4 @@
+# This architecture ensures a 3-2-1 backup strategy (3 copies of data, 2 different media, 1 offsite) while solving the issue of Veeam chaotic naming conventions.
 This unified setup ensures your daily Veeam image is correctly captured by ZFS and that your weekly Restic upload adheres to your 4-week retention policy with full logging and NTFY alerts.
 I use zfs snapshot 30 days retention policy and cloud retention - 4 week snapshots per month.So i have last 4 week snapshots on cloud.
 
