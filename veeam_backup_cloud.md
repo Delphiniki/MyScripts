@@ -150,6 +150,8 @@ docker exec restic_veeam_uploader restic snapshots
 # (Replace ID with the snapshot ID from step 1)
 docker exec restic_veeam_uploader restic restore [SNAPSHOT_ID] --target /mnt/Tank/restore-test/ --include /data/LatestBackup
 
+# That way the files will land at: /mnt/Tank/restore-test/data/LatestBackup/
+
 ```
 
 Now that the file is back on your NAS, you treat it like a local backup.
