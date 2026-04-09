@@ -159,7 +159,7 @@ Now that the file is back on your NAS, you treat it like a local backup.
 4. Browse to the /restore-test/ folder where you extracted the files.
 5. Veeam will see the .vbm file, load the restore points, and begin overwriting the local disk.
 
-⚙️ Strategic Logic: The "Waterfall" Effect
+## ⚙️ Strategic Logic: The "Waterfall" Effect
 This setup utilizes a precise timeline to ensure maximum storage efficiency and data integrity.
 1. Path Standardization
 Veeam standalone backups create unique, timestamped folders (e.g., _adhoc_2026...). This is chaotic for long-term tracking. By using the Globbing Method (ls -d *adhoc*), the script captures the newest backup regardless of its age and renames it to a static directory: LatestBackup.
