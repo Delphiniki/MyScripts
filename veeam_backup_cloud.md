@@ -159,3 +159,18 @@ Now that the file is back on your NAS, you treat it like a local backup.
 4. Browse to the /restore-test/ folder where you extracted the files.
 5. Veeam will see the .vbm file, load the restore points, and begin overwriting the local disk.
 
+⚙️ Strategic Logic: The "Waterfall" Effect
+This setup utilizes a precise timeline to ensure maximum storage efficiency and data integrity.
+1. Path Standardization
+Veeam standalone backups create unique, timestamped folders (e.g., _adhoc_2026...). This is chaotic for long-term tracking. By using the Globbing Method (ls -d *adhoc*), the script captures the newest backup regardless of its age and renames it to a static directory: LatestBackup.
+2. ZFS Deduplication Efficiency
+By maintaining a static folder name (LatestBackup), ZFS snapshots see changes as block-level updates to the same files rather than the creation of entirely new directories. This allows for:
+
+    Near-zero overhead for daily local snapshots.
+    Instant comparison between yesterday and today's data.
+
+3. Restic Content-Addressable Sync
+Because the path /data/LatestBackup never changes, Restic's deduplication engine performs a "lightning-fast" scan. Even if the .vbk is 14GB, Restic only uploads the specific changed chunks, drastically reducing bandwidth and cloud storage costs.
+4. The "Secret Agent" (VSS)
+The system relies on the Windows Volume Shadow Copy Service (VSS). By keeping VSS on Manual, the Veeam Agent "summons" it only during the 05:00 AM window, keeping the Windows OS lean and bloat-free during the day.
+
