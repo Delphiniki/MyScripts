@@ -55,7 +55,7 @@ services:
 
 -----------------------------------------------
 ### The script:
-I placed the script inside a folder "'/mnt/Tank/scripts'restic-veeam=uploader.sh".Scheduled in Truenas cronjobs:
+I placed the script inside a folder "'/mnt/Tank/scripts'restic-veeam-uploader.sh".Scheduled in Truenas cronjobs:
 ```bash
 #!/bin/bash
 
